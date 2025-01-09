@@ -45,6 +45,8 @@ header > p {
   font-size: 12px;
 }
 
+/* contents부분 */
+
 main {
   /* height: 100vh; */
   background-color: bisque;
@@ -57,7 +59,7 @@ main {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-columns: 200px 200px 200px 200px 200px 200px;
+  grid-template-columns: 230px 230px 230px 230px 230px 230px;
   grid-template-rows: 1fr 1fr 1fr;
   /* background-color: rgb(168, 226, 226); */
   /* border: 3px solid black; */
@@ -67,25 +69,81 @@ main {
 }
 
 .item {
-  width: 205px;
+  width: 230px;
   height: 370px;
   border: 3px solid black; /* 각 항목 간의 선 색상 및 두께 */
   box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item > p {
   text-align: left;
-  padding-left: 5px;
-  line-height: 30px;
+  padding-left: 8px;
+  line-height: 25px;
+}
+
+.movie_img {
+  width: 228px;
+  height: 300px;
 }
 
 .movie_name {
   margin-top: 5px;
-  font-weight: bold;
-  font-size: 20px;
+  font-weight: bolder;
+  font-size: clamp(12px, 2vw, 15px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .cus_avg {
   color: gray;
   font-weight: bold;
+  font-size: 12px;
+}
+
+/* modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: none;
+
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0, 0.8);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal_body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-direction: row;
+
+  /* align-items: center; */
+
+  width: 600px;
+  height: 700px;
+  background-color: bisque;
+}
+
+#close_btn {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+}
+
+#close_btn:hover {
+  cursor: pointer;
+  background-color: gray;
 }
