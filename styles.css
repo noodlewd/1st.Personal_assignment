@@ -103,6 +103,7 @@ main {
 }
 
 /* modal */
+
 .modal {
   position: fixed;
   top: 0;
@@ -124,26 +125,37 @@ main {
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
+  justify-content: center;
+  align-items: center;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  flex-direction: row;
-
-  /* align-items: center; */
-
+  display: grid;
   width: 600px;
   height: 700px;
   background-color: bisque;
+  grid-template-columns: 600px;
+}
+
+.modal_body > p {
+  text-align: left;
+  padding-left: 10px;
 }
 
 #close_btn {
+  position: absolute;
   width: 50px;
   height: 50px;
+  top: 10px; /* 상단에서 10px 떨어진 위치 */
+  right: 10px; /* 오른쪽에서 10px 떨어진 위치 */
+
   background-color: white;
 }
 
 #close_btn:hover {
   cursor: pointer;
   background-color: gray;
+}
+
+#add_bookmark {
+  width: 300px;
+  height: 35px;
 }

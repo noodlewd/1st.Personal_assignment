@@ -13,9 +13,9 @@ fetch(url, options)
   .then((data) => {
     const baseUrl = "https://image.tmdb.org/t/p/w200";
     const container = document.querySelector(".container");
-
+    const resultsMv = data.results;
     // 데이터 검증단계 - api 데이터인 data.results 배열이 잘 넘어오는지 확인하는 방법
-    if (!Array.isArray(data.results) || data.results.length === 0) {
+    if (!Array.isArray(resultsMv) || resultsMv.length === 0) {
       console.error("데이터가 없거나 잘못된 구조입니다.");
       return;
     }
@@ -24,7 +24,7 @@ fetch(url, options)
     container.innerHTML = "";
 
     // data.results배열을 movie 를 통해서 순회
-    data.results.forEach((movie) => {
+    resultsMv.forEach((movie) => {
       const item = document.createElement("div");
       item.classList.add("item");
 
@@ -37,15 +37,20 @@ fetch(url, options)
         <p class="movie_name">${movie.title}</p>
         <p class="cus_avg">평점: ${movie.vote_average.toFixed(1)}점</p>
       `;
-      container.appendChild(item);
 
+      container.appendChild(item);
       // 클릭 이벤트
-      const openModal = document.querySelector(".movie_img");
+      const openModal = item.querySelector(".movie_img");
       const closeModal = document.querySelector("#close_btn");
       const modalBox = document.querySelector(".modal");
 
       openModal.addEventListener("click", () => {
         modalBox.classList.add("active");
+        modalBox.querySelector(".movie_img").src = baseUrl + movie.poster_path;
+        modalBox.querySelector(".movie_name").textContent = movie.title;
+        modalBox.querySelector(".movie_overview").textContent = movie.overview;
+        modalBox.querySelector(".movie_relDate").textContent = "개봉일 " + movie.release_date;
+        modalBox.querySelector(".cus_avg").textContent = "평점: " + movie.vote_average.toFixed(1);
       });
 
       closeModal.addEventListener("click", () => {
