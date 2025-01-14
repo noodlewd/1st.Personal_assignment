@@ -8,57 +8,77 @@ const options = {
   },
 };
 
-fetch(url, options)
-  .then((res) => res.json())
-  .then((data) => {
-    const baseUrl = "https://image.tmdb.org/t/p/w200";
-    const container = document.querySelector(".container");
-    const resultsMv = data.results;
-    // 데이터 검증단계 - api 데이터인 data.results 배열이 잘 넘어오는지 확인하는 방법
-    if (!Array.isArray(resultsMv) || resultsMv.length === 0) {
-      console.error("데이터가 없거나 잘못된 구조입니다.");
-      return;
-    }
+let postArray = [];
 
-    // 기존 콘텐츠 초기화(중복 방지)
-    container.innerHTML = "";
+function fetchData() {
+  fetch(url, options)
+    .then((res) => res.json())
+    .then((data) => {
+      postArray = data.results;
+      displayPosts(data);
+    });
+}
 
-    // data.results배열을 movie 를 통해서 순회
-    resultsMv.forEach((movie) => {
-      const item = document.createElement("div");
-      item.classList.add("item");
+function displayPosts(data) {
+  const baseUrl = "https://image.tmdb.org/t/p/w200";
+  const container = document.querySelector(".container");
+  const resultsMv = data.results;
+  // 데이터 검증단계 - api 데이터인 data.results 배열이 잘 넘어오는지 확인하는 방법
+  if (!Array.isArray(resultsMv) || resultsMv.length === 0) {
+    console.error("데이터가 없거나 잘못된 구조입니다.");
+    return;
+  }
 
-      // 데이터 처리 - 삼항 연산자를 사용해서 이미지가 안넘어 올 시 예비 이미지 사용
-      const imageSrc = movie.poster_path ? baseUrl + movie.poster_path : "placeholder.jpg";
+  // 기존 콘텐츠 초기화(중복 방지)
+  container.innerHTML = "";
 
-      // HTML 설정 - 백틱을 이옹하여 추가
-      item.innerHTML = `
+  // data.results배열을 movie 를 통해서 순회
+  resultsMv.forEach((movie) => {
+    const item = document.createElement("div");
+    item.classList.add("item");
+
+    // 데이터 처리 - 삼항 연산자를 사용해서 이미지가 안넘어 올 시 예비 이미지 사용
+    const imageSrc = movie.poster_path ? baseUrl + movie.poster_path : "placeholder.jpg";
+
+    // HTML 설정 - 백틱을 이옹하여 추가
+    item.innerHTML = `
         <img class="movie_img" src="${imageSrc}" alt="${movie.title}">
         <p class="movie_name">${movie.title}</p>
         <p class="cus_avg">평점: ${movie.vote_average.toFixed(1)}점</p>
       `;
 
-      container.appendChild(item);
-      // 클릭 이벤트
-      const openModal = item.querySelector(".movie_img");
-      const closeModal = document.querySelector("#close_btn");
-      const modalBox = document.querySelector(".modal");
+    container.appendChild(item);
 
-      openModal.addEventListener("click", () => {
-        modalBox.classList.add("active");
-        modalBox.querySelector(".movie_img").src = baseUrl + movie.poster_path;
-        modalBox.querySelector(".movie_name").textContent = movie.title;
-        modalBox.querySelector(".movie_overview").textContent = movie.overview;
-        modalBox.querySelector(".movie_relDate").textContent = "개봉일 " + movie.release_date;
-        modalBox.querySelector(".cus_avg").textContent = "평점: " + movie.vote_average.toFixed(1);
-      });
+    // 클릭 이벤트
+    const openModal = item.querySelector(".movie_img");
+    const closeModal = document.querySelector("#close_btn");
+    const modalBox = document.querySelector(".modal");
 
-      closeModal.addEventListener("click", () => {
-        modalBox.classList.remove("active");
-      });
+    openModal.addEventListener("click", () => {
+      modalBox.classList.add("active");
+      modalBox.querySelector(".movie_img").src = baseUrl + movie.poster_path;
+      modalBox.querySelector(".movie_name").textContent = movie.title;
+      modalBox.querySelector(".movie_overview").textContent = movie.overview;
+      modalBox.querySelector(".movie_relDate").textContent = "개봉일 " + movie.release_date;
+      modalBox.querySelector(".cus_avg").textContent = "평점: " + movie.vote_average.toFixed(1);
     });
-  })
 
-  .catch((err) => console.error("API 호출 오류:", err));
+    closeModal.addEventListener("click", () => {
+      modalBox.classList.remove("active");
+    });
+  });
+}
+fetchData();
 
-//검색
+const searchMV = document.querySelector("#searchBtn");
+const searchInput = document.querySelector("#search");
+
+searchMV.addEventListener("click", function () {
+  // 1. 검색 필드에 영화목록 가져오기
+  // 2. 영화들 필터링
+  const keyword = searchInput.value;
+  const filteredPosts = postArray.filter(function (m) {
+    return m.title.includes(keyword);
+  });
+  console.log(filteredPosts);
+});
