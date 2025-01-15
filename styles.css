@@ -168,6 +168,10 @@ main {
   background-color: rgba(218, 215, 215, 0.754);
 }
 
+#back_btn {
+  display: none;
+}
+
 #add_bookmark {
   width: 95%;
   height: 55px;

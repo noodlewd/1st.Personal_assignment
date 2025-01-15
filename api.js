@@ -14,7 +14,7 @@ function fetchData() {
   fetch(url, options)
     .then((res) => res.json())
     .then((data) => {
-      postArray = data.results;
+      postArray = data.results; 
       displayPosts(data);
     });
 }
@@ -70,7 +70,7 @@ function displayPosts(data) {
 }
 fetchData();
 
-const searchMV = document.querySelector("#searchBtn");
+const searchMV = document.querySelector("#search_btn");
 const searchInput = document.querySelector("#search");
 
 searchMV.addEventListener("click", function () {
@@ -78,7 +78,29 @@ searchMV.addEventListener("click", function () {
   // 2. 영화들 필터링
   const keyword = searchInput.value;
   const filteredPosts = postArray.filter(function (m) {
-    return m.title.includes(keyword);
+    // 검색값과 데이터가 전부 소문자로 변형
+    return m.title.toLowerCase().includes(keyword.toLowerCase());
   });
-  console.log(filteredPosts);
+
+  // 객체에서 필터링된 값 불러오기
+  displayPosts({ results: filteredPosts });
+
+  // 검색된 값이 알맞지 않거나 값이 존재하지 않을 때 alert
+  if (filteredPosts.length === 0 || keyword === "") {
+    alert(`다시 검색해주세요.`);
+  } else {
+    // 검색 후 버튼 나타내기 및 값이 없을 땐 버튼 x
+    backBtn.style.display = "inline-block";
+  }
+});
+
+const backBtn = document.querySelector("#back_btn");
+
+backBtn.addEventListener("click", function () {
+  // 뒤로가기를 통해 초기화면으로 돌아가면 다시 사라짐
+  backBtn.style.display = "none";
+  // 배열 전체를 보여줌
+  displayPosts({ results: postArray });
+  // 검색값 초기화
+  searchInput.value = "";
 });
