@@ -46,7 +46,7 @@ project_1st/
 
 ## 🛠️기술 스택
 - **프론트엔드**: HTML, CSS, JacaScript
-- **API**: TMDN API
+- **API**: TMDB API
 - **개발 도구**: Visual Studio Code, Git
 
 ---
