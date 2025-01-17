@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=cancel"
@@ -12,40 +12,45 @@
   </head>
   <body>
     <header>
-      <h2>영화 검색</h2>
-      <!--검색 시에 조건에 부합하는 영화들 나열-->
+      <h2><a href="./index.html">영화 검색</a></h2>
+      <!--영화 입력 박스-->
       <input type="search" id="search" placeholder="영화를 검색하세요." />
-      <button id="search_btn">검색</button>
-      <button id="back_btn">뒤로가기</button>
+      <!--검색 버튼-->
+      <button id="search_btn">🔍</button>
+      <!--뒤로가기 버튼-->
+      <button id="back_btn">뒤로</button>
       <!--modal창 안의 북마크 추가 입력 시 저장 되는 곳-->
-      <p>북마크 보기</p>
+      <p><a href="#">북마크 보기</a></p>
     </header>
 
     <main>
-      <!-- grid layout 확인용 div, 간소화 예정 -->
       <div class="container">
-        <!--.item 안에 img, 이름, 평점, 클릭 시 modal창 구현-->
+        <!--아이템 - 이미지,제목,평점-->
         <div class="item">
           <img class="movie_img" alt="이미지없음" />
           <p class="movie_name">영화 제목</p>
           <p class="cus_avg">평점</p>
         </div>
       </div>
+      <!--상세페이지(모달)-->
       <div class="modal">
+        <!--모달 바디 - 버튼,이미지,제목,줄거리,개봉일,평점,북마크버튼-->
         <div class="modal_body">
-          <button id="close_btn"></button>
+          <!--모달 닫기 버튼-->
+          <button id="close_btn">❌</button>
           <img class="movie_img" alt="이미지없음" />
           <p class="movie_name">영화 제목</p>
           <p class="movie_overview">영화 줄거리</p>
           <p class="movie_relDate">개봉일</p>
           <p class="cus_avg">평점</p>
+          <!--북마크 추가 버튼-->
           <button id="add_bookmark">북마크 추가</button>
         </div>
       </div>
     </main>
 
     <footer></footer>
-
-    <script src="./api.js"></script>
+    <!--JS파일 연결-->
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
