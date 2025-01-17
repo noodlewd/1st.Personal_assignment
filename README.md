@@ -1,5 +1,3 @@
-<h1> # 1st.Personal_assignment </h1>
-
 <h2>🔥TMDB API 연동하여 영화 검색 사이트 만들기🔥</h2>
 TMDB API를 받아 인기영화를 검색하는 사이트 입니다.
 
